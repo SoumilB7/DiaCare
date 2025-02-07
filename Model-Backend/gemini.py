@@ -1,0 +1,63 @@
+import os
+import google.generativeai as genai
+from dotenv import load_dotenv
+import json
+load_dotenv()
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=gemini_api_key)
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+
+def parse_data(textual_data):
+    format = """
+    {
+    "Pregnancies" : int 
+    "Glucose" : int
+    "BloodPressure" : int
+    "SkinThickness" : int 
+    "Insulin" : int
+    "BMI" : int
+    "DiabetesPedigreeFunction" : int
+    "Age" : int
+    }
+    """
+    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    response = model.generate_content(prompt)
+    jsonobj = response.text
+    jsonobj = jsonobj.removeprefix("```json\n")
+    jsonobj = jsonobj.removesuffix("```\n")
+    final_dict = json.loads(jsonobj)
+    return final_dict
+
+def fallback_diagnosis(textual_data):
+    fallback_format = {
+        "Diabetes-type" : "(No Diabetes or Type 1 Diabetes or Type 2 Diabetes)",
+    }
+    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {fallback_format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    response = model.generate_content(prompt)
+    jsonobj = response.text
+    jsonobj = jsonobj.removeprefix("```json\n")
+    jsonobj = jsonobj.removesuffix("```\n")
+    print("Model output fallback : ",jsonobj)
+    final_dict = json.loads(jsonobj)
+    return final_dict
+
+def diagnosiser(type,info):
+    format = """
+    {
+    "Diet" = "--",
+    "Medications" = "--",
+    "Additional_info" = "--",
+    }
+    """
+    prompt = f"""I want you to act as a diabetic expert doctor and analyze the following patients conditions, Diabetes Type = {type}, personal information = {info} and after this i want you to provide him perfect diet, medications, additional information about physical activity and changes in day to day life to make conditions better. \n Absolutely follow the following format while making the diagnosis : {format} (do not give anything else)
+    Keep in mind you are operating in India, provide the diet which is indianized, has indian foods and also is economical for the patient. Also provide the exercises which donot require heavy equipment. Provide very very specific answers dont give generalized options."""
+    response = model.generate_content(prompt)
+    jsonobj = response.text
+    jsonobj = jsonobj.removeprefix("```json\n")
+    jsonobj = jsonobj.removesuffix("```\n")
+    print("Diagnosis on day to day life : ",jsonobj)
+    final_dict = json.loads(jsonobj)
+    return final_dict
+
