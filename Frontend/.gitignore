@@ -12,6 +12,7 @@ assets/external/
 *.py[cod]
 .vscode
 .web
+.env
 __pycache__/
 backend.zip
 bun.lockb
