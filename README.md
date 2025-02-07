@@ -15,7 +15,7 @@ DiaCare AI is an intelligent healthcare platform designed to provide **end-to-en
 |---------------------|----------------|
 | **AI & ML**        | ANN, PyTorch, Gemini API |
 | **Backend**        | Python, FastAPI |
-| **Frontend**       | React Native |
+| **Frontend**       | Reflex |
 | **Database**       | MongoDB |
 
 ## 📂 Project Structure
