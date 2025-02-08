@@ -21,8 +21,8 @@ parser = LlamaParse(
     api_key=llama_api_key,
 )
 
-async def aloder(textual_content,info):
-    textual_output = await parser.aload_data(textual_content, extra_info=info)
+async def aloder(textual_content):
+    textual_output = await parser.aload_data(textual_content)
 
 
 loaded_model = nn.Sequential(

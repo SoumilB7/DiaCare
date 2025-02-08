@@ -45,9 +45,7 @@ async def predict_multimodal(
     print("loading done")
     textual_content = data.get("textual_data") # bytes
     textual_content = base64.b64decode(textual_content)
-    file_name = data.get("filename")
-    info = {"file_name": file_name}
-    textual_output = await aloder(textual_content, info=info)
+    textual_output = await aloder(textual_content)
     data = parse_data(textual_output)
     print("data parsing done : ",data)
     try:
