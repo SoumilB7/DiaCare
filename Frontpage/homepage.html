@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiaCare-AI | Your AI Companion for Diabetes Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            background: url('Sign Up.svg') repeat center center fixed;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 5%;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-auth {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            border: 1px solid #666;
+            background: transparent;
+        }
+
+        .btn-filled {
+            background: #666;
+            color: white;
+            border: none;
+        }
+
+        .hero {
+            padding: 4rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('/api/placeholder/400/400') no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-family: 'Staatliches', cursive;
+        }
+
+        .hero-subtitle {
+            font-size: 2.5rem;
+            color: #666;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            font-family: 'Staatliches', cursive;
+        }
+
+        .sign-in-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 300px;
+        }
+
+        .sign-in-btn {
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            border: none;
+            background: #9747FF;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in-btn:hover {
+            background: #8033FF;
+        }
+
+        .info-card {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: #9747FF;
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-image {
+            flex: 0 0 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #666;
+        }
+
+        .info-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-wrapper {
+            padding: 4rem 5%;
+        }
+
+        .faq {
+            display: flex;
+            width: 100%;
+            gap: 4rem;
+        }
+
+        .faq-title {
+            flex: 0 0 300px;
+        }
+
+        .faq-title h2 {
+            font-size: 3rem;
+            line-height: 1.1;
+            font-weight: bold;
+        }
+
+        .faq-content {
+            flex: 1;
+        }
+
+        .faq-item {
+            position: relative;
+            padding: 1.5rem 0 1.5rem 1.5rem;
+            border-top: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .faq-item:last-child {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .faq-item::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            top: 1.5rem;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 1rem 0;
+            color: #666;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 4rem 5%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .footer-link:hover {
+            color: #9747FF;
+        }
+
+        .footer-link i {
+            font-size: 20px;
+            width: 24px;
+        }
+
+        .footer-link:hover i {
+            color: #9747FF;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .info-card {
+                flex-direction: column;
+            }
+
+            .faq {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .faq-title {
+                flex: none;
+            }
+
+            .faq-title h2 {
+                font-size: 2rem;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="#" class="footer-link">Home</a>
+            <a href="#" class="footer-link">About Us</a>
+            <a href="#" class="footer-link">Contact Us</a>
+        </div>
+        <div class="nav-auth">
+            <button class="btn btn-outline">Log in</button>
+            <button class="btn btn-filled">Sign up</button>
+        </div>
+    </nav>
+
+    <hr>
+
+    <main class="hero">
+        <h1 class="hero-title">DIACARE-AI</h1>
+        <p class="hero-subtitle">SMART. SIMPLE. PERSONALIZED—<br>YOUR AI COMPANION FOR DIABETES CARE</p>
+        
+        <div class="sign-in-buttons">
+            <button class="sign-in-btn">Sign in as Patient</button>
+            <button class="sign-in-btn">Sign in as Doctor</button>
+        </div>
+
+        <div class="info-card">
+            <div class="info-content">
+                <h2>What we do?</h2>
+                <p>Managing diabetes shouldn't be complicated! DiaCare AI uses the power of artificial intelligence to provide personalized support, smart insights, and proactive care—helping you stay in control of your health effortlessly.</p>
+            </div>
+            <div class="info-image">
+                <img src="doctor.png" alt="Doctor illustration">
+            </div>
+        </div>
+    </main>
+
+    <div class="content-wrapper">
+        <section class="faq">
+            <div class="faq-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-content">
+                <div class="faq-item">What does DiaCare do?
+                    <div class="faq-answer">Diacare-AI appears to be a medical artificial intelligence system designed to provide personalized diabetes care recommendations. The system likely operates at the intersection of healthcare and machine learning, processing various types of medical data to generate patient-specific suggestions.</div>
+                </div>
+                <div class="faq-item">How does DiaCare do what they do?
+                    <div class="faq-answer">Diacare-AI leverages machine learning algorithms and medical data to provide tailored diabetes care suggestions.</div>
+                </div>
+                <div class="faq-item">How accurate is the AI diagnosis?
+                    <div class="faq-answer">DiaCare AI uses advanced machine learning models trained on medical data to provide highly accurate diabetes detection, risk assessment, and treatment suggestions. However, it is not a replacement for a doctor’s consultation and should be used as a supportive tool.</div>
+                </div>
+                <div class="faq-item">Is DiaCare AI free to use?
+                    <div class="faq-answer">Currently, basic analysis and reports are free. However, advanced AI-driven recommendations & HSP features may require a premium plan in the future.</div>
+                </div>
+                <div class="faq-item">Is my medical data secure?
+                    <div class="faq-answer">Yes! DiaCare AI follows strict data security protocols including encryption & HIPAA-compliant data storage to ensure patient confidentiality.</div>
+                </div>
+                <div class="faq-item">Can DiaCare AI replace my doctor?
+                    <div class="faq-answer">No. DiaCare AI is a decision-support tool that provides insights and recommendations. You should always consult your doctor for final medical decisions.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-section">
+            <h3>Reach us here!</h3>
+            <a href="#" class="footer-link">
+                <i class="fab fa-instagram"></i>
+                Instagram
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fab fa-linkedin"></i>
+                LinkedIn
+            </a>
+            <a href="#" class="footer-link">
+                <i class="fab fa-twitter"></i>
+                Twitter
+            </a>
+        </div>
+        <div class="footer-section">
+            <h3>DiaCare-AI</h3>
+            <a href="#" class="footer-link">About Us</a>
+            <a href="#" class="footer-link">Blogs</a>
+            <a href="#" class="footer-link">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let answer = this.querySelector('.faq-answer');
+                if (answer.style.display === "block") {
+                    answer.style.display = "none";
+                } else {
+                    answer.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

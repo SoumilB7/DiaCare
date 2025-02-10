@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiaCare - Medical App Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('Glass Effect Login Page - Blue.svg') repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(179, 136, 255, 0.1);
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            bottom: -75px;
+            right: -75px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+            gap: 50px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .illustration-container {
+            flex: 1;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #e0f4e9;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .illustration-container img {
+            width: 100%; /* Ensure the image scales with the container */
+            max-width: 700px; /* Set a maximum width for the image */
+            height: auto; /* Maintain the aspect ratio */
+            display: block; /* Center the image within the container */
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .illustration-container {
+                display: block;
+            }
+        }
+
+        .login-form {
+            background: #B388FF;
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .forgot-password a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .sign-in-btn {
+            width: 100%;
+            padding: 12px;
+            background: #FFFFE0;
+            border: none;
+            border-radius: 8px;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .sign-in-btn:hover {
+            background: #ffffb3;
+        }
+
+        .divider {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            width: 100px;
+            padding: 10px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            background: #f5f5f5;
+        }
+
+        .social-btn i {
+            font-size: 18px;
+        }
+
+        .fa-google {
+            color: #DB4437;
+        }
+
+        .fa-apple {
+            color: #000000;
+        }
+
+        .fa-facebook {
+            color: #4267B2;
+        }
+
+        .register-link {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #FFFFE0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="illustration-container">
+            <img src="doctor1.png" alt="Medical app illustration">
+        </div>
+        
+        <div class="login-form">
+            <div class="logo">DiaCare</div>
+            <h2>Login</h2>
+            
+            <form>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="username@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Password">
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="sign-in-btn">Sign in</button>
+                
+                <div class="divider">or continue with</div>
+                
+                <div class="social-buttons">
+                    <button class="social-btn">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                    <button class="social-btn">
+                        <i class="fab fa-facebook"></i>
+                    </button>
+                </div>
+                
+                <div class="register-link">
+                    Don't have an account? <a href="#">Register for free</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
