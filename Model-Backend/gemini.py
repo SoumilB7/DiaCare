@@ -22,9 +22,10 @@ def parse_data(textual_data):
     "Age" : int
     }
     """
-    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The output should strictly be in the format {format}. DO NOT PRINT ANYTHING ELSE not even the json code block string: ( if no data provided then simply put in null for it )"
     response = model.generate_content(prompt)
     jsonobj = response.text
+    print("hehehe",jsonobj)
     jsonobj = jsonobj.removeprefix("```json\n")
     jsonobj = jsonobj.removesuffix("```\n")
     final_dict = json.loads(jsonobj)
@@ -34,12 +35,14 @@ def fallback_diagnosis(textual_data):
     fallback_format = {
         "Diabetes-type" : "(No Diabetes or Type 1 Diabetes or Type 2 Diabetes)",
     }
-    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {fallback_format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    prompt = f"As a doctor understand trascript of the form : {textual_data} And provide logica analysis of the diabetes type of the patient. The output should be in the format {fallback_format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
     response = model.generate_content(prompt)
     jsonobj = response.text
     jsonobj = jsonobj.removeprefix("```json\n")
-    jsonobj = jsonobj.removesuffix("```\n")
-    print("Model output fallback : ",jsonobj)
+    jsonobj = jsonobj.removesuffix("\n```\n")
+    jsonobj = jsonobj.replace("'",'"')
+    a = list(jsonobj)
+    print("Model output fallback : ",a)
     final_dict = json.loads(jsonobj)
     return final_dict
 
@@ -58,6 +61,34 @@ def diagnosiser(type,info):
     jsonobj = jsonobj.removeprefix("```json\n")
     jsonobj = jsonobj.removesuffix("```\n")
     print("Diagnosis on day to day life : ",jsonobj)
+    final_dict = json.loads(jsonobj)
+    doctor_concisation = doctor_report(type,info)
+    final = {
+        "user":final_dict,
+        "doctor":doctor_concisation
+    }
+    return final
+
+
+def doctor_report(type,info):
+    format = """
+    {
+    "Concise_diagnosis" = "--",
+    }
+    """
+    prompt = f"""As an endocrinologist, provide a concise analysis for a patient with {type} diabetes. Patient context: {info}
+    Please provide:
+    1. Key findings (2-3 sentences)
+    2. Recommended medication plan (primary and alternatives)
+    3. Next steps (prioritized list of 2-3 immediate actions)
+    4. Additional tests required, if any
+    Keep all sections brief and actionable, focusing on critical information only.
+    Keep the output only in the format and nothing else : {format}"""    
+    response = model.generate_content(prompt)
+    jsonobj = response.text
+    jsonobj = jsonobj.removeprefix("```json\n")
+    jsonobj = jsonobj.removesuffix("```\n")
+    print("Diagnosis concisation for the doctor: ",jsonobj)
     final_dict = json.loads(jsonobj)
     return final_dict
 

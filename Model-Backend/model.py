@@ -14,7 +14,7 @@ parser = LlamaParse(
     result_type="markdown",
     premium_mode=True,
     num_workers=9,
-    parsing_instruction="It is a medical report",
+    parsing_instruction="",
     verbose=True,
     skip_diagonal_text=False,
     page_separator="\n\n============================================\n\n",
@@ -22,7 +22,10 @@ parser = LlamaParse(
 )
 
 async def aloder(textual_content,info):
-    textual_output = await parser.aload_data(textual_content, extra_info=info)
+    print("hh",textual_content[:10])
+    textual_output = await parser.aload_data(textual_content,extra_info=info)
+    print("heree",textual_output)
+    return textual_output
 
 
 loaded_model = nn.Sequential(
