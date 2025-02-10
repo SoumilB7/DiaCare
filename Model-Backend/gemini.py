@@ -22,9 +22,10 @@ def parse_data(textual_data):
     "Age" : int
     }
     """
-    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The output should strictly be in the format {format}. DO NOT PRINT ANYTHING ELSE not even the json code block string: ( if no data provided then simply put in null for it )"
     response = model.generate_content(prompt)
     jsonobj = response.text
+    print("hehehe",jsonobj)
     jsonobj = jsonobj.removeprefix("```json\n")
     jsonobj = jsonobj.removesuffix("```\n")
     final_dict = json.loads(jsonobj)
@@ -34,12 +35,14 @@ def fallback_diagnosis(textual_data):
     fallback_format = {
         "Diabetes-type" : "(No Diabetes or Type 1 Diabetes or Type 2 Diabetes)",
     }
-    prompt = f"Parse the following values from this trascript of the form : {textual_data}. The file should be in the format {fallback_format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
+    prompt = f"As a doctor understand trascript of the form : {textual_data} And provide logica analysis of the diabetes type of the patient. The output should be in the format {fallback_format}. DO NOT PRINT ANYTHING ELSE not even the json code block string:"
     response = model.generate_content(prompt)
     jsonobj = response.text
     jsonobj = jsonobj.removeprefix("```json\n")
-    jsonobj = jsonobj.removesuffix("```\n")
-    print("Model output fallback : ",jsonobj)
+    jsonobj = jsonobj.removesuffix("\n```\n")
+    jsonobj = jsonobj.replace("'",'"')
+    a = list(jsonobj)
+    print("Model output fallback : ",a)
     final_dict = json.loads(jsonobj)
     return final_dict
 
